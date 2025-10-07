@@ -1,134 +1,23 @@
 import "hardhat-deploy";
-import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-network-helpers";
+import "@nomicfoundation/hardhat-verify";
 import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-etherscan";
 import "@openzeppelin/hardhat-upgrades";
 import "@typechain/hardhat";
+import "hardhat-gas-reporter";
+import "solidity-coverage";
 import { task, types } from "hardhat/config";
-import type { HardhatUserConfig } from "hardhat/types";
+import "dotenv/config";
 
-import dotenv from "dotenv";
-
-dotenv.config();
-
-let {
-	DEPLOYER_PRIVATE_KEY,
-	SHIELD3_API_KEY,
-	ETHERSCAN_API_KEY,
-	BASESCAN_API_KEY,
-	ARBISCAN_API_KEY,
-	BSCSCAN_API_KEY,
-	POLYGONSCAN_API_KEY,
-	OPTIMISM_API,
-	SCROLL_API,
-	CELO_API,
-} = process.env;
-
-const testPrivateKey = "0000000000000000000000000000000000000000000000000000000000000001"
-
-const config: HardhatUserConfig = {
+const config = {
 	namedAccounts: {
 		deployer: {
-			default: 0, // here this will by default take the first account as deployer
-		},
-	},
-	networks: {
-		// Mainnets
-		arbitrumOne: {
-			url: `https://rpc.shield3.com/v3/0xa4b1/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 42161,
-			saveDeployments: true,
-		},
-		base: {
-			url: `https://rpc.shield3.com/v3/0x2105/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 8453,
-			saveDeployments: true,
-		},
-		bsc: {
-			url: `https://rpc.shield3.com/v3/0x38/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 56,
-			saveDeployments: true,
-		},
-		polygon: {
-			url: `https://rpc.shield3.com/v3/0x89/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 137,
-			saveDeployments: true,
-		},
-		mainnet: {
-			url: `https://rpc.shield3.com/v3/0x1/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 1,
-			saveDeployments: true,
-		},
-		optimisticEthereum: {
-			url: `https://rpc.shield3.com/v3/0x0a/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 10,
-			saveDeployments: true,
-		},
-		scroll: {
-			url: "https://scroll.drpc.org", // @note this is a public rpc
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 534352,
-			saveDeployments: true,
-		},
-		celo: {
-			url: "https://forno.celo.org", // @note this is a public rpc
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 42220,
-			saveDeployments: true,
-		},
-		assetChain: {
-			url: "https://mainnet-rpc.assetchain.org", // @note this is a public rpc
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 42420,
-			saveDeployments: true,
-		},
-		lisk: {
-			url: "https://rpc.api.lisk.com", // @note this is a public rpc
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 1135,
-			saveDeployments: true,
-		},
-
-		// Testnets
-		arbitrumSepolia: {
-			url: `https://rpc.shield3.com/v3/0x66eee/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 421614,
-			gasPrice: "auto",
-			saveDeployments: true,
-		},
-		amoy: {
-			url: `https://rpc.shield3.com/v3/0x13882/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 80002,
-			saveDeployments: true,
-		},
-		baseSepolia: {
-			url: `https://rpc.shield3.com/v3/0x14a34/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 84532,
-			saveDeployments: true,
-		},
-		sepolia: {
-			url: `https://rpc.shield3.com/v3/0xaa36a7/${SHIELD3_API_KEY}/rpc`,
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 11155111,
-			saveDeployments: true,
-		},
-		assetchainTestnet: {
-			url: "https://enugu-rpc.assetchain.org/", // @note this is a public rpc
-			accounts: [DEPLOYER_PRIVATE_KEY || testPrivateKey],
-			chainId: 42421,
-			saveDeployments: true,
+			default: 0,
 		},
 	},
 	solidity: {
+		version: "0.8.20",
 		settings: {
 			optimizer: {
 				enabled: true,
@@ -136,102 +25,108 @@ const config: HardhatUserConfig = {
 			},
 			viaIR: true,
 		},
+	},
+	networks: {
+		// Mainnets
+		arbitrumOne: {
+			url: "https://arb1.arbitrum.io/rpc",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 42161,
+			saveDeployments: true,
+		},
+		base: {
+			url: "https://mainnet.base.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 8453,
+			saveDeployments: true,
+		},
+		bsc: {
+			url: "https://bsc-dataseed1.binance.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 56,
+			saveDeployments: true,
+		},
+		polygon: {
+			url: "https://polygon-rpc.com",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 137,
+			saveDeployments: true,
+		},
+		mainnet: {
+			url: "https://eth.llamarpc.com",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 1,
+			saveDeployments: true,
+		},
+		optimisticEthereum: {
+			url: "https://mainnet.optimism.io",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 10,
+			saveDeployments: true,
+		},
+		scroll: {
+			url: "https://scroll.drpc.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 534352,
+			saveDeployments: true,
+		},
+		celo: {
+			url: "https://forno.celo.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 42220,
+			saveDeployments: true,
+		},
+		assetChain: {
+			url: "https://mainnet-rpc.assetchain.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 42420,
+			saveDeployments: true,
+		},
+		lisk: {
+			url: "https://rpc.api.lisk.com",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 1135,
+			saveDeployments: true,
+		},
 
-		compilers: [
-			{
-				version: "0.8.18",
-			},
-			{
-				version: "0.8.9",
-			},
-			{
-				version: "0.8.20",
-			},
-		],
+		// Testnets
+		arbitrumSepolia: {
+			url: "https://sepolia-rollup.arbitrum.io/rpc",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 421614,
+			saveDeployments: true,
+		},
+		amoy: {
+			url: "https://rpc-amoy.polygon.technology",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 80002,
+			saveDeployments: true,
+		},
+		baseSepolia: {
+			url: "https://sepolia.base.org",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 84532,
+			saveDeployments: true,
+		},
+		sepolia: {
+			url: "https://ethereum-sepolia.blockpi.network/v1/rpc/public",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 11155111,
+			saveDeployments: true,
+		},
+		assetchainTestnet: {
+			url: "https://enugu-rpc.assetchain.org/",
+			accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+			chainId: 42421,
+			saveDeployments: true,
+		},
+	},
+	sourcify: {
+		enabled: false
 	},
 	etherscan: {
-		apiKey: {
-			base: BASESCAN_API_KEY!,
-			baseSepolia: BASESCAN_API_KEY!,
-			arbitrumOne: ARBISCAN_API_KEY!,
-			arbitrumSepolia: ARBISCAN_API_KEY!,
-			bsc: BSCSCAN_API_KEY!,
-			polygon: POLYGONSCAN_API_KEY!,
-			amoy: POLYGONSCAN_API_KEY!,
-			mainnet: ETHERSCAN_API_KEY!,
-			sepolia: ETHERSCAN_API_KEY!,
-			optimisticEthereum: OPTIMISM_API!,
-			scroll: SCROLL_API!,
-			celo: CELO_API!,
-			lisk: "Paycrest", // @note https://docs.blockscout.com/devs/verification/hardhat-verification-plugin#config-file-and-unsupported-networks
-			assetChain: "Paycrest",
-		},
-		customChains: [
-			{
-				network: "base",
-				chainId: 8453,
-				urls: {
-					apiURL: "https://api.basescan.org/api",
-					browserURL: "https://basescan.org",
-				},
-			},
-			{
-				network: "scroll",
-				chainId: 534352,
-				urls: {
-					apiURL: "https://api.scrollscan.com/api",
-					browserURL: "https://scrollscan.com/",
-				},
-			},
-			{
-				network: "lisk",
-				chainId: 1135,
-				urls: {
-					apiURL: "https://blockscout.lisk.com/api",
-					browserURL: "https://blockscout.lisk.com/",
-				},
-			},
-			{
-				network: "assetChain",
-				chainId: 42421,
-				urls: {
-					apiURL: "https://scan.assetchain.org/api",
-					browserURL: "https://scan.assetchain.org/",
-				},
-			},
-			{
-				network: "baseSepolia",
-				chainId: 84532,
-				urls: {
-					apiURL: "https://api-sepolia.basescan.org/api",
-					browserURL: "https://sepolia.basescan.org",
-				},
-			},
-			{
-				network: "arbitrumSepolia",
-				chainId: 421614,
-				urls: {
-					apiURL: "https://api-sepolia.arbiscan.io/api",
-					browserURL: "https://sepolia.arbiscan.io",
-				},
-			},
-			{
-				network: "amoy",
-				chainId: 80002,
-				urls: {
-					apiURL: "https://api-amoy.polygonscan.com/api",
-					browserURL: "https://amoy.polygonscan.com",
-				},
-			},
-			{
-				network: "celo",
-				chainId: 42220,
-				urls: {
-					apiURL: "https://api.celoscan.io/api",
-					browserURL: "https://celoscan.io/",
-				},
-			},
-		],
+		enabled: true,
+		apiKey: process.env.ETHERSCAN_API_KEY || "",
 	},
 };
 

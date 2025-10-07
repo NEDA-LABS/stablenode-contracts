@@ -1,9 +1,9 @@
 {
-  "name": "paycrest",
+  "name": "@nedapay/stablenode-contracts",
   "version": "1.0.0",
-  "description": "cross-border payment facilitator, using blockchain technology and peer-to-peer off-ramps for transactions",
+  "description": "NEDAPay Stablenode - Multi-chain EVM smart contracts for cross-border payments. Originally created by Paycrest.",
   "main": "index.js",
-  "repository": "https://github.com/paycrest/contracts",
+  "repository": "https://github.com/NEDA-LABS/contracts",
   "scripts": {
     "test": "npx hardhat test",
     "ownership": "npx hardhat test test/gateway/gateway.ownable.test.js",
@@ -13,26 +13,32 @@
     "lint:sol": "prettier --loglevel warn --ignore-path .gitignore 'contracts/**/*.sol' --check && solhint 'contracts/**/*.sol'",
     "lint:sol:fix": "prettier --loglevel warn --ignore-path .gitignore 'contracts/**/*.sol' --write"
   },
-  "keywords": [],
-  "author": "https://onahprosper.github.io/",
-  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "smart-contracts",
+    "cross-border-payments",
+    "defi",
+    "stablecoin",
+    "multi-chain"
+  ],
+  "author": "NEDA Labs",
+  "license": "AGPL-3.0",
   "devDependencies": {
-    "@daochild/tronweb-typescript": "^1.1.2",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomicfoundation/hardhat-verify": "^2.1.1",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-etherscan": "^3.1.7",
-    "@openzeppelin/hardhat-upgrades": "^1.27.0",
-    "@openzeppelin/truffle-upgrades": "^1.21.0",
+    "@openzeppelin/hardhat-upgrades": "^1.28.0",
     "@typechain/ethers-v5": "^10.2.0",
     "@typechain/hardhat": "^6.1.5",
     "chai": "^4.3.7",
     "dotenv": "^16.0.2",
     "ethers": "^5.7.2",
-    "hardhat": "^2.14.0",
+    "hardhat": "^2.22.0",
     "hardhat-deploy": "^0.11.34",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.2",
@@ -43,7 +49,6 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.5",
     "@openzeppelin/contracts-upgradeable": "^4.9.5",
-    "crypto-js": "^4.1.1",
-    "tronweb": "^5.3.1"
+    "crypto-js": "^4.1.1"
   }
 }

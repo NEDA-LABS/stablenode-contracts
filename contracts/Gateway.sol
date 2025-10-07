@@ -30,7 +30,7 @@ contract Gateway is IGateway, GatewaySettingManager, PausableUpgradeable {
 	 */
 	function initialize() external initializer {
 		MAX_BPS = 100_000;
-		__Ownable2Step_init();
+		__GatewaySettingManager_init();
 		__Pausable_init();
 	}
 

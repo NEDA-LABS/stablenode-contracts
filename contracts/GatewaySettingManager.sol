@@ -18,6 +18,18 @@ contract GatewaySettingManager is Ownable2StepUpgradeable {
 	// this should decrease if more slots are needed on this contract to avoid collisions with base contract
 	uint256[50] private __gap;
 
+	/**
+	 * @dev Initializer for GatewaySettingManager
+	 * This function should be called by child contracts
+	 */
+	function __GatewaySettingManager_init() internal onlyInitializing {
+		__Ownable2Step_init();
+	}
+
+	function __GatewaySettingManager_init_unchained() internal onlyInitializing {
+		// Reserved for future use
+	}
+
 
 	event SettingManagerBool(bytes32 indexed what, address indexed value, uint256 status);
 	event ProtocolFeeUpdated(uint64 protocolFee);

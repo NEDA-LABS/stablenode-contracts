@@ -4,12 +4,15 @@ const ProxyAdmin = artifacts.require(
   );
 const Gateway = artifacts.require("Gateway");
 
-const proxyContractAddress = "THyFP5ST9YyLZn6EzjKjFhZti6aKPgEXNU"; 
-// Shasta: 
-// const proxyContractAddress = "TYA8urq7nkN2yU7rJqAgwDShCusDZrrsxZ";
+// Set your proxy contract address here
+const proxyContractAddress = process.env.PROXY_CONTRACT_ADDRESS || ""; 
 
 module.exports = async function (deployer) {
   try {
+    if (!proxyContractAddress) {
+      throw new Error("Please set PROXY_CONTRACT_ADDRESS environment variable");
+    }
+
     // Deploy the new Gateway implementation contract
     await deployer.deploy(Gateway);
 
