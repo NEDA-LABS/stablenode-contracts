@@ -7,7 +7,7 @@
 
 NEDAPay Stablenode contracts are multi-chain EVM-based smart contracts that facilitate the on-chain lifecycle of payment orders. They empower senders to create payment orders, enable liquidity providers to receive cryptocurrency in escrow, and provide a secure, transparent payment infrastructure for cross-border transactions.
 
-![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXd9vDhbrwj3ikJ9ghsVPc4qaZ7_RmgzNn3CjbW2jvAWepYYBmIat8Mtidid8OCBzuP7Sr-_zab6gjjpM6tSJm3p00akfR9xhkkzckDoZOhO9jiqgnO0EkZRyH4QoxgGAXRelCSNxQ?key=xfQ-CdRhtjGdAX7gL41tK8t-)
+![image](https://drive.google.com/uc?export=view&id=1UKPMkrSawn_brbE_YQg4S6epqV_fIzh3)
 
 ## Deployment
 
