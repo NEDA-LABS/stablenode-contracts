@@ -2,7 +2,6 @@
 
 # NEDAPay Stablenode Contracts
 
-> **Originally created by [Paycrest](https://github.com/paycrest/contracts)** - We acknowledge and thank the Paycrest team for their work in cross-border payment infrastructure.
     
 ## Description
 
@@ -119,40 +118,12 @@ Contract tests are defined under the tests directory. To run all the tests, run:
 npx hardhat test
 ```
 
-## **Commits and PRs**
 
-This project uses Conventional Commits to generate release notes and to determine versioning. Commit messages should adhere to this standard and be of the form:
-
-```bash
-$ git commit -m "feat: Add new feature x"
-$ git commit -m "fix: Fix bug in feature x"
-$ git commit -m "docs: Add documentation for feature x"
-$ git commit -m "test: Add test suite for feature x"
-```
-
-Further details on `conventional commits` can be found [here](https://www.conventionalcommits.org/en/v1.0.0/)
-
-## Contributing
-
-We welcome contributions to the NEDAPay Stablenode gateway contract! To get started:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes using conventional commits
-4. Push to your branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 Our team will review your pull request and work with you to get it merged into the main branch of the repository.
 
 If you encounter any issues or have questions, feel free to open an issue on the repository.
 
-## Acknowledgments
-
-This project is built upon the foundation laid by [Paycrest](https://github.com/paycrest/contracts). We are grateful for their pioneering work in blockchain-based cross-border payment infrastructure.
-
-**Original Paycrest Contributors:**
-- [Prosperity](https://github.com/onahprosperity) - Original core developer
-- [chibie](https://github.com/chibie) - Original core developer
 
 ## Contributors ✨
 
